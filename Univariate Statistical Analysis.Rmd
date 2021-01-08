@@ -1,0 +1,43 @@
+---
+title: "Chapter 5"
+author: "By Saba Akram"
+date: "12/27/2020"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r}
+# Input the churn dataset
+churn <- read.csv("D:/Data Mining and Predictive Analysis/Data sets/churn.txt",stringsAsFactors = TRUE)
+# Analyse subgroup of a data.
+subchurn<-subset(churn,churn$Int.l.Plan=="yes"&churn$VMail.Plan=="yes"&churn$Day.Mins>220)
+summary(subchurn$CustServ.Calls)
+length(subchurn$CustServ.Calls)
+# One Sample T test and confidence interval for mean.
+mean.test<-t.test(x=subchurn$CustServ.Calls,mu=2.4,conf.level = .95)
+mean.test
+mean.test$statistic
+mean.test$p.value
+mean.test$conf.int
+# One Sample proportion Test and Confidence Interval
+num.churn<-sum(churn$Churn.=="True") # Churners
+num.churn
+sample.size<-dim(churn)[1]
+sample.size
+p<-483/sample.size # Point Estimete
+Z_data<-(p-.15)/sqrt((.15*(1-.15))/sample.size)
+Z_data # Test Statistics.
+error<-qnorm(0.975, mean=0, sd=1)*sqrt((p*(1-p))/sample.size)
+error
+lower.bound<-p-error
+lower.bound
+upper.bound<-p+error
+upper.bound
+p.value<-2*pnorm(Z_data,mean = 0,sd=1)
+p.value
+
+
+
+```
+
